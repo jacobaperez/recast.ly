@@ -4,27 +4,21 @@ class VideoListEntry extends React.Component {
     this.title = props.title;
     this.thumbnail = props.thumbnail;
     this.description = props.desc;
-
-    this.state = {
-      done:false
-    }
-  }
-
-  onVideoClick(event) {
-    this.setState({
-      done: !this.state.done
-    });
-    console.log('I got clicked', event);
+    this.video = props.video;
+    this.clickFunc = props.clickFunc;
   }
 
   render() {
     return (
       <div className="video-list-entry media">
         <div className="media-left media-middle">
-          <img onClick={this.onVideoClick.bind(this)} className="media-object" src={this.thumbnail} alt="" />
+          <img className="media-object" src={this.thumbnail} alt="" />
         </div>
         <div className="media-body">
-          <div onClick={this.onVideoClick.bind(this)} className="video-list-entry-title">{this.title}</div>
+          <div onClick = { 
+            
+            (function() {  this.clickFunc(this.video) }).bind(this)
+          } className="video-list-entry-title">{this.title}</div>
           <div className="video-list-entry-detail">{this.description}</div>
         </div>
       </div>   
