@@ -1,25 +1,32 @@
-var searchYouTube = (options, callback) => 
-  
+var searchYouTube = (options, callback) => {
+
+//var q = $('.form-control').val();
+  // var q = options.query;
+  // var maxResults = options.max;
+  // var key = options.key;
+
   function handleSearchButton() {
     $('.btn hidden-sm-down').attr('disabled', false);
-  
-
-  function search() {
-    var q = $('.form-control').val();
-    var request = gapi.client.youtube.search.list({
-      key: window.YOUTUBE_API_KEY,
-      maxResults: 5,
-      type: 'video',
-      videoEmbeddable: 'true',
-      q: q,
-      part: 'snippet',
-    });
   }
 
-  request.execute(function(reponse) {
-    var str = JSON.stringify(response.result);
-    console.log(str);
-  });
+  //
+   $.ajax({
+      url: 'https://www.googleapis.com/youtube/v3/search',
+      type: 'GET',
+      timeout: 5000,
+      data: options,
+      contentType: 'application/json',
+      success: function(data){
+        //pass in data into callback
+        console.log('Got youtube results successfully, data is ', data);
+        console.log('Got youtube results successfully, first result is ', data.items[0]);
+        callback(data);
+        //get element by id
+      },
+      error: function(data) {
+        console.log('what is my key', options );
+      },
+    });
 };
 
 window.searchYouTube = searchYouTube;
